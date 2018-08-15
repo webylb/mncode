@@ -1,4 +1,7 @@
 # mncode
+```
+this is start up
+```
 
 ## Project setup
 ```
