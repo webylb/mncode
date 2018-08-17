@@ -1,8 +1,9 @@
 <template>
   <div class="home">
-    <Head :userList="userList" />
-    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <Category msg="Welcome to Your Vue.js App"/>
+    <Head :userList="userList"></Head>
+    <Content >
+        <Category msg="Welcome to Your Vue.js App"/>
+    </Content>
     <Foot/>
   </div>
 </template>
