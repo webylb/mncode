@@ -1,18 +1,40 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Head :userList="userList" />
+    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
+    <Category msg="Welcome to Your Vue.js App"/>
+    <Foot/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import Head from "@/components/Head.vue";
+import Category from "@/components/Category.vue";
+import Foot from "@/components/Foot.vue";
 
 export default {
   name: "home",
+  data() {
+    return {
+      userList: [
+        {
+          id: "1",
+          name: "黄仔",
+          age: "27"
+        },
+        {
+          id: "2",
+          name: "鱼仔",
+          age: "28"
+        }
+      ]
+    };
+  },
   components: {
-    HelloWorld
+    Head,
+    Category,
+    Foot
   }
 };
 </script>
