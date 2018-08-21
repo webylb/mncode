@@ -1,6 +1,6 @@
 <template>
   <div class="category">
-    <h1>{{ msg }}</h1>
+    <h1></h1>
   </div>
 </template>
 

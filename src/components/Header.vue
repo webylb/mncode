@@ -1,10 +1,10 @@
 <template>
-    <Row class="head layout">
+    <Row class="header layout">
         <Col span="24">
-            <Header :style="{position:'fiexd',width: '100%',padding: '2px 0px',background: '#fff'}">
+            <Header :style="{position: 'fixed',width: '100%',padding: '2px 0px',background: '#fff'}">
                 <Menu mode="horizontal" :theme="theme">
                   <Row type="flex" justify="center" class="code-row-bg">
-                      <Col span="18">
+                      <Col span="16">
                           <div class="layout-logo">
                             <router-link :to="{name:'home'}" class="brand">
                                 <img src="https://bihu.com/static/media/logo.81b9b93e.png">
@@ -37,7 +37,7 @@
 </template>
 <script>
 export default {
-  name: "head",
+  name: "header",
   props: {
     userList: {
       type: Array
