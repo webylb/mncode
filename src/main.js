@@ -6,10 +6,12 @@ import "./registerServiceWorker";
 import Axios from "axios";
 import iView from "iview";
 import "iview/dist/styles/iview.css";
+import utils from "./utils/index.js";
 
 Vue.config.productionTip = false;
 
 Vue.prototype.$axios = Axios;
+Vue.prototype.$utils = utils;
 
 Vue.use(iView);
 

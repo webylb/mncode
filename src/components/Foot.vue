@@ -12,4 +12,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+.foot {
+  text-align: center;
+}
 </style>

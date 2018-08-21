@@ -1,9 +1,8 @@
 <template>
   <div class="home">
     <Header :style="{'z-index': '1'}"></Header>
-       
     <Row type="flex" justify="center" class="code-row-bg" :style="{'z-index': '0'}">
-        <Col span="16">
+        <Col :xs="18" :sm="16" :md="16" :lg="14" >
         <Content :style="{margin: '88px 20px 0', background: '#fff', minHeight: '500px'}">
             <Menu mode="horizontal" :theme="theme" active-name="1" @on-select="SelectMenu">
                 <MenuItem name="1" >
@@ -18,19 +17,35 @@
                     <div class="articl-avatar-item">
                         <router-link :to="'/user/' + item.userId" >
                             <img :src="'https://oss02.bihu.com/' + item.userIcon" alt="">
-                            <h5>{{ item.userName }}</h5>
+                            <div class="aritcl-user">
+                                <p>{{ item.userName }}</p>
+                                <time class="time">{{$utils.timeFormat(item.createTime)}}</time>
+                            </div>
                         </router-link>
                     </div>
                     <div class="aritcl-info-item">
-
+                        <div class="articl-img-item">
+                            <img :src="'https://oss02.bihu.com/' + item.snapimage | formatImgUrl" alt="">
+                        </div>
+                        <div class="articl-text-item">
+                            <router-link :to="'/article/' + item.id" class="title">
+                                <h3>{{ item.title }}</h3>
+                                <p class="summary" v-html=" item.snapcontent +'...'"></p>
+                            </router-link>
+                            <div class="tag-group">
+                                <Tag color="default"><Icon type="md-aperture" /> {{ item.money }}</Tag>
+                                <Tag color="default"><Icon type="ios-thumbs-up-outline" /> {{ item.ups }}</Tag>
+                                <Tag color="default"><Icon type="ios-chatboxes-outline" /> {{ item.cmts }}</Tag>
+                            </div>
+                        </div>
                     </div>
                 </li>
                 
             </ul>
+            <Page :total="total" show-elevator class="pagecont" @on-change="changePage"/>
         </Content>
         </Col>
-    </Row>    
-        
+    </Row>     
     <Foot/>
   </div>
 </template>
@@ -38,7 +53,6 @@
 <script>
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
-import Category from "@/components/Category.vue";
 import Foot from "@/components/Foot.vue";
 
 export default {
@@ -60,16 +74,30 @@ export default {
       theme: "light",
       articleList: [],
       total: 0,
-      isRender: false // 重新渲染分页组件（定位到第一页）
+      isRender: false, // 重新渲染分页组件（定位到第一页）
+      tabIndex: 1
     };
   },
   components: {
     Header,
-    Category,
     Foot
   },
   created() {
     this.getHotArtList();
+  },
+  filters: {
+    formatImgUrl(url) {
+      //console.log(url);
+      let newUrl = url.split(",")[0];
+      //console.log(url);
+      return newUrl;
+    }
+  },
+  watch: {
+    $route(to, from) {
+      this.isRender = false;
+      this.getHotArtList();
+    }
   },
   methods: {
     // 获取热门文章列表
@@ -85,7 +113,7 @@ export default {
             this.articleList = res.data.data.list;
             this.total = res.data.data.total;
             this.isRender = true;
-            console.log(res.data.data.list);
+            //console.log(res.data.data.list);
           }
         });
     },
@@ -102,10 +130,11 @@ export default {
             this.articleList = res.data.data.list;
             this.total = res.data.data.total;
             this.isRender = true;
-            console.log(res.data.data.list);
+            //console.log(res.data.data.list);
           }
         });
     },
+    //tab切换
     SelectMenu(name) {
       //console.log(name);
       this.isRender = "false";
@@ -113,39 +142,101 @@ export default {
       switch (index) {
         case "1":
           this.getHotArtList();
+          this.tabIndex = 1;
           break;
         case "2":
           this.getNewArtList();
+          this.tabIndex = 2;
           break;
         default:
           break;
+      }
+    },
+    //分页
+    changePage(page) {
+      //console.log(page);
+      if (this.tabIndex == 1) {
+        this.getHotArtList(page);
+      } else {
+        this.getNewArtList(page);
       }
     }
   }
 };
 </script>
 <style lang="less" scoped>
-.articlList {
-  list-style: none;
-  .articlList-item {
-    position: relative;
-    height: auto;
-    padding: 10px;
-    overflow: hidden;
-    border-bottom: 1px solid #ddd;
-    .articl-avatar-item {
-      margin-bottom: 20px;
-      img {
-        width: 40px;
+.home {
+  .articlList {
+    list-style: none;
+    .articlList-item {
+      position: relative;
+      height: auto;
+      padding: 10px;
+      overflow: hidden;
+      border-bottom: 1px solid #ddd;
+      .articl-avatar-item {
+        margin-bottom: 20px;
         height: 40px;
-        border-radius: 50%;
+        text-align: left;
+        display: flex;
+        display: -webkit-flex;
+        a {
+          display: flex;
+          display: -webkit-flex;
+          color: #333;
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+          }
+          .aritcl-user {
+            font-size: 14px;
+            font-weight: bold;
+            height: 40px;
+            .time {
+              font-size: 12px;
+              color: #ddd;
+            }
+          }
+        }
       }
-      h5 {
-        display: inline-block;
-        font-size: 14px;
-        font-weight: bold;
+      .aritcl-info-item {
+        display: -webkit-flex;
+        display: flex;
+        .articl-img-item {
+          width: 230px;
+          height: 140px;
+          img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .articl-text-item {
+          margin-left: 20px;
+          position: relative;
+          .title:hover {
+            text-decoration: underline;
+          }
+          h3 {
+            font-size: 18px;
+          }
+          .tag-group {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            i {
+              font-size: 18px;
+              margin-bottom: 3px;
+            }
+          }
+        }
       }
     }
+  }
+  .pagecont {
+    padding: 20px;
   }
 }
 </style>

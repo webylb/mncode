@@ -4,7 +4,7 @@
             <Header :style="{position: 'fixed',width: '100%',padding: '2px 0px',background: '#fff'}">
                 <Menu mode="horizontal" :theme="theme">
                   <Row type="flex" justify="center" class="code-row-bg">
-                      <Col span="16">
+                      <Col :xs="18" :sm="16" :md="16" :lg="14" >
                           <div class="layout-logo">
                             <router-link :to="{name:'home'}" class="brand">
                                 <img src="https://bihu.com/static/media/logo.81b9b93e.png">
