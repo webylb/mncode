@@ -2,7 +2,23 @@
   <div class="home">
     <Header :style="{'z-index': '1'}"></Header>
     <Row type="flex" justify="center" class="code-row-bg" :style="{'z-index': '0'}">
-        <Col :xs="18" :sm="16" :md="16" :lg="14" >
+        <Col :xs="0" :sm="4" :md="4" :lg="2" >
+        <Content :style="{margin: '88px 20px 0', background: '#fff', minHeight: '500px'}">
+            <Menu :theme="theme" active-name="1" @on-select="SelectLeftMenu">
+                <MenuGroup title="内容管理">
+                  <MenuItem name="1">
+                      <Icon type="md-document" />
+                      文章管理
+                  </MenuItem>
+                  <MenuItem name="2">
+                      <Icon type="md-chatbubbles" />
+                      评论管理
+                  </MenuItem>
+              </MenuGroup>
+            </Menu>
+        </Content>
+        </Col>
+        <Col :xs="18" :sm="14" :md="14" :lg="10" >
         <Content :style="{margin: '88px 20px 0', background: '#fff', minHeight: '500px'}">
             <Menu mode="horizontal" :theme="theme" active-name="1" @on-select="SelectMenu">
                 <MenuItem name="1" >
@@ -43,7 +59,10 @@
                 
             </ul>
             <Page :total="total" show-elevator class="pagecont" @on-change="changePage"/>
+            <BackTop></BackTop>
         </Content>
+        </Col>
+        <Col :xs="0" :sm="6" :md="6" :lg="3" >
         </Col>
     </Row>     
     <Foot/>

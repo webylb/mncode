@@ -1,8 +1,8 @@
 <template>
     <Row class="header layout">
         <Col span="24">
-            <Header :style="{position: 'fixed',width: '100%',padding: '2px 0px',background: '#fff'}">
-                <Menu mode="horizontal" :theme="theme">
+            <Header :style="{position: 'fixed',width: '100%',padding: '0',background: '#fff'}">
+                <Menu mode="horizontal" :theme="theme" class="header-menu">
                   <Row type="flex" justify="center" class="code-row-bg">
                       <Col :xs="18" :sm="16" :md="16" :lg="14" >
                           <div class="layout-logo">
@@ -12,20 +12,10 @@
                           </div>
                           <div class="layout-nav">
                               <MenuItem name="1">
-                                  <Icon type="ios-navigate"></Icon>
-                                  Item 1
+                                  登陆
                               </MenuItem>
                               <MenuItem name="2">
-                                  <Icon type="ios-keypad"></Icon>
-                                  Item 2
-                              </MenuItem>
-                              <MenuItem name="3">
-                                  <Icon type="ios-analytics"></Icon>
-                                  Item 3
-                              </MenuItem>
-                              <MenuItem name="4">
-                                  <Icon type="ios-paper"></Icon>
-                                  Item 4
+                                  注册
                               </MenuItem>
                           </div>
                       </Col>
@@ -61,27 +51,35 @@ export default {
   position: relative;
   overflow: hidden;
 }
-.layout-logo {
-  width: 110px;
-  height: 100%;
-  border-radius: 3px;
-  float: left;
-  position: relative;
-  top: 0px;
-  left: 20px;
-  .brand {
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-    padding: 10px 0;
-    img {
-      width: 100%;
+.header-menu {
+  height: 65px;
+  line-height: 65px;
+  .code-row-bg {
+    height: 65px;
+    .layout-logo {
+      width: 110px;
+      height: 100%;
+      border-radius: 3px;
+      float: left;
+      position: relative;
+      top: 0px;
+      left: 20px;
+      .brand {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        padding: 12px 0;
+        img {
+          width: 100%;
+        }
+      }
+    }
+    .layout-nav {
+      display: inline-block;
+      height: 65px;
+      float: right;
     }
   }
 }
-.layout-nav {
-  width: 420px;
-  margin: 0 auto;
-  margin-right: 20px;
-}
+
 </style>

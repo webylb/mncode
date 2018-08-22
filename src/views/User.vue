@@ -55,7 +55,6 @@
                         </div>
                     </div>
                 </li>
-                
             </ul>
             <ul class="followsList" v-show="tabIndex == 2 ? true : false">
                 <li v-for="(item, index) in userFollow" :key="index" class="followsList-item">
@@ -92,6 +91,7 @@
                 </li>
             </ul>
             <Page :total="total" show-elevator class="pagecont" @on-change="changePage"/>
+            <BackTop></BackTop>
         </Content>
         </Col>
     </Row>     

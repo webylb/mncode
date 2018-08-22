@@ -45,6 +45,7 @@
                 </ul>
             </div>
             <Page v-if="comment.pageSize < comment.total" :total="comment.total" show-elevator class="pagecont" @on-change="changePage"/>
+            <BackTop></BackTop>
         </Content>
       </Col>
     </Row>     
@@ -173,6 +174,12 @@ export default {
     }
     .user-attentionBtn {
       padding-top: 20px;
+    }
+  }
+  .comment {
+    margin-top: 20px;
+    h3 {
+      font-size: 24px;
     }
   }
   .articlList {
