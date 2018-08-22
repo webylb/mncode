@@ -111,7 +111,7 @@ export default {
     // 获取分页数据
     getCommmentPage(pageNum = 1) {
       this.$axios
-        .post("https://be02.bihu.com/bihube-pc/bihu/comment/listrootcomment",{
+        .post("https://be02.bihu.com/bihube-pc/bihu/comment/listrootcomment", {
           articleId: this.id,
           pageNum: pageNum
         })
