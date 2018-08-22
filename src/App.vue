@@ -18,14 +18,14 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+a {
+  color: #333;
+}
 #app {
   font-family: Interstate, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  a {
-    color: #333;
-  }
 }
 #nav {
   padding: 30px;

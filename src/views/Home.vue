@@ -166,12 +166,15 @@ export default {
 </script>
 <style lang="less" scoped>
 .home {
+  a {
+    color: #333;
+  }
   .articlList {
     list-style: none;
     .articlList-item {
       position: relative;
       height: auto;
-      padding: 10px;
+      padding: 15px 10px;
       overflow: hidden;
       border-bottom: 1px solid #ddd;
       .articl-avatar-item {

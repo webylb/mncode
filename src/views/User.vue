@@ -76,7 +76,19 @@
             </ul>
             <ul class="userFansList" v-show="tabIndex == 3 ? true : false">
                 <li v-for="(item, index) in userFans" :key="index" class="userFansList-item followsList-item">
-                  
+                    <router-link :to="'/user/'+ item.userId" class="followsList-item-cont">
+                        <div class="followsList-img">
+                            <img :src="'https://oss02.bihu.com/' + item.userIcon"  :alt="item.userName"/>
+                        </div>
+                        <div class="followsList-namecont">
+                            <p class="followsList-name">{{ item.userName }}</p>
+                            <p class="followsList-fans">粉丝:{{ item.fans }}</p>
+                        </div>
+                    </router-link>
+                    
+                    <div class="followsList-attentionBtn">
+                        <Button type="primary" shape="circle" ghost>关注</Button>
+                    </div>
                 </li>
             </ul>
             <Page :total="total" show-elevator class="pagecont" @on-change="changePage"/>
@@ -367,11 +379,15 @@ export default {
             width: 100%;
           }
         }
-        .followsList-name {
-          font-size: 14px;
-        }
-        .followsList-fans {
-          color: #bcc7d7;
+        .followsList-namecont {
+          margin-left: 15px;
+          margin-top: 5px;
+          .followsList-name {
+            font-size: 14px;
+          }
+          .followsList-fans {
+            color: #bcc7d7;
+          }
         }
       }
     }
