@@ -90,7 +90,7 @@ export default {
             this.$axios
               .get("https://oss02.bihu.com/" + res.data.data.content)
               .then(res => {
-                console.log(res);
+                //console.log(res);
                 this.articleContent = decodeURIComponent(res.data);
               });
             //获取评论
@@ -103,7 +103,7 @@ export default {
               )
               .then(res => {
                 this.comment = res.data.data;
-                console.log(res);
+                //console.log(res);
               });
           }
         });
@@ -118,7 +118,7 @@ export default {
         .then(res => {
           if (res.data.resMsg == "success") {
             this.comment = res.data.data;
-            console.log(res);
+            //console.log(res);
           }
         });
     },
