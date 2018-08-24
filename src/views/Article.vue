@@ -176,6 +176,12 @@ export default {
       padding-top: 20px;
     }
   }
+  .articlcont {
+    overflow-x: hidden;
+    img {
+      width: 100%;
+    }
+  }
   .comment {
     margin-top: 20px;
     h3 {

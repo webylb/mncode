@@ -39,7 +39,7 @@
                         </router-link>
                     </div>
                     <div class="aritcl-info-item">
-                        <div class="articl-img-item">
+                        <div class="articl-img-item"  v-show="item.snapimage == '' ? false : true">
                             <img :src="'https://oss02.bihu.com/' + item.snapimage | formatImgUrl" alt="">
                         </div>
                         <div class="articl-text-item">
@@ -154,7 +154,7 @@ export default {
         .post(
           "https://be02.bihu.com/bihube-pc/api/content/show/getUserArtList",
           {
-            challenge: "",
+            challenge: "0b401ea70ca7842c503512cba59d6f98",
             crash: 1,
             pageNum: pageNum,
             queryUserId: userId
@@ -203,6 +203,7 @@ export default {
           if (res.data.resMsg === "success") {
             this.userFans = res.data.data.list;
             this.isRender = true;
+            this.total = res.data.data.total;
             console.log(res.data.data);
           }
         });
@@ -323,13 +324,13 @@ export default {
       .aritcl-info-item {
         display: -webkit-flex;
         display: flex;
+        min-height: 100px;
         .articl-img-item {
           width: 230px;
           height: 140px;
           img {
-            object-fit: cover;
-            width: 100%;
-            height: 100%;
+            width: 230px;
+            height: 140px;
           }
         }
         .articl-text-item {

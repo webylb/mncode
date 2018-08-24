@@ -3,19 +3,37 @@
     <Header :style="{'z-index': '1'}"></Header>
     <Row type="flex" justify="center" class="code-row-bg" :style="{'z-index': '0'}">
         <Col :xs="0" :sm="4" :md="4" :lg="2" >
-        <Content :style="{margin: '88px 20px 0', background: '#fff', minHeight: '500px'}">
-            <Menu :theme="theme" active-name="1" @on-select="SelectLeftMenu">
-                <MenuGroup title="内容管理">
-                  <MenuItem name="1">
-                      <Icon type="md-document" />
-                      文章管理
-                  </MenuItem>
-                  <MenuItem name="2">
-                      <Icon type="md-chatbubbles" />
-                      评论管理
-                  </MenuItem>
-              </MenuGroup>
-            </Menu>
+        <Content :style="{margin: '88px 0 0 0', minHeight: '500px', 'z-index': '1'}">
+            <ul class="home-sider">  
+                <li :class="addactive == 1 ? 'active' :''" @click="addActive('1')">
+                    <router-link :to="{path:'/',query:{category:'recommend'}}">
+                      推荐
+                    </router-link>
+                </li>
+                <li :class="addactive == 2 ? 'active' :''"  @click="addActive('2')">
+                    <router-link :to="{path:'/',query:{category:'follow'}}">
+                      关注
+                    </router-link>
+                </li>
+                <li class="active" v-show="showCategroy == '' ? false : true">
+                    <router-link :to="{path:'/', query: {code: showCategroy}}">
+                      {{ showCategroy }}
+                    </router-link>
+                </li>
+                <li class="more-btn" @mouseover="showCategoryMenu('1')" @mouseout="showCategoryMenu('0')">
+                    更多
+                    <div class="button-cont" v-show="isShow == 1 ? true : false">
+                        <h3>热门</h3>
+                        <div class="buttonGroup">
+                            <Button type="primary" ghost v-for="item in categoryList" :key="item.id" @click="clickCategory(item.code)">
+                                <router-link :to="{path:'/', query: {code: item.code}}">
+                                    {{item.code}}
+                                </router-link>
+                            </Button>
+                        </div>
+                    </div>
+                </li>
+            </ul> 
         </Content>
         </Col>
         <Col :xs="18" :sm="14" :md="14" :lg="10" >
@@ -40,7 +58,7 @@
                         </router-link>
                     </div>
                     <div class="aritcl-info-item">
-                        <div class="articl-img-item">
+                        <div class="articl-img-item" v-show="item.snapimage == '' ? false : true">
                             <img :src="'https://oss02.bihu.com/' + item.snapimage | formatImgUrl" alt="">
                         </div>
                         <div class="articl-text-item">
@@ -49,7 +67,7 @@
                                 <p class="summary" v-html=" item.snapcontent +'...'"></p>
                             </router-link>
                             <div class="tag-group">
-                                <Tag color="default"><Icon type="md-aperture" /> {{ item.money }}</Tag>
+                                <Tag color="default"><Icon type="ios-cash-outline" /> {{ item.money }}</Tag>
                                 <Tag color="default"><Icon type="ios-thumbs-up-outline" /> {{ item.ups }}</Tag>
                                 <Tag color="default"><Icon type="ios-chatboxes-outline" /> {{ item.cmts }}</Tag>
                             </div>
@@ -94,7 +112,11 @@ export default {
       articleList: [],
       total: 0,
       isRender: false, // 重新渲染分页组件（定位到第一页）
-      tabIndex: 1
+      tabIndex: 1,
+      categoryList: [],
+      addactive: 1,
+      showCategroy: "",
+      isShow: 0
     };
   },
   components: {
@@ -103,6 +125,7 @@ export default {
   },
   created() {
     this.getHotArtList();
+    this.getCategoryList();
   },
   filters: {
     formatImgUrl(url) {
@@ -119,6 +142,16 @@ export default {
     }
   },
   methods: {
+    //获取分类列表
+    getCategoryList() {
+      this.$axios
+        .post("https://be02.bihu.com/bihube-pc/api/content/queryBoardList")
+        .then(res => {
+          if (res.data.resMsg == "success") {
+            this.categoryList = res.data.data.noSubList;
+          }
+        });
+    },
     // 获取热门文章列表
     getHotArtList(pageNum = 1) {
       this.$axios
@@ -179,6 +212,16 @@ export default {
       } else {
         this.getNewArtList(page);
       }
+    },
+    addActive(params) {
+      this.addactive = params;
+    },
+    clickCategory(params) {
+      //console.log(params);
+      this.showCategroy = params;
+    },
+    showCategoryMenu(params) {
+      this.isShow = params;
     }
   }
 };
@@ -188,12 +231,103 @@ export default {
   a {
     color: #333;
   }
+  .home-sider {
+    list-style: none;
+    text-align: right;
+    li {
+      width: 100px;
+      height: 40px;
+      text-align: center;
+      font-size: 16px;
+      margin: 2px 0 2px 0;
+      line-height: 40px;
+      cursor: pointer;
+      display: inline-block;
+      border-radius: 3px;
+      a {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    li:hover {
+      background-color: #007bff;
+      color: #fff;
+      a {
+        color: #fff;
+      }
+      h3 {
+        color: #333;
+      }
+      .button-cont {
+        a {
+          color: #333;
+        }
+      }
+    }
+    .active {
+      background-color: #007bff;
+      color: #fff;
+      a {
+        color: #fff;
+      }
+    }
+    .button-cont::before {
+      content: "";
+      border-left: 20px solid transparent;
+      border-top: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 20px solid #fff;
+      position: absolute;
+      left: -40px;
+      transform: rotate(-90deg);
+      z-index: 1001;
+      top: 90px;
+    }
+    .more-btn {
+      position: relative;
+      .button-cont {
+        position: absolute;
+        width: 650px;
+        background: #fff;
+        left: 120px;
+        z-index: 1000;
+        padding: 20px 10px;
+        top: -90px;
+        -webkit-box-shadow: 1px 6px 12px rgba(0, 0, 0, 0.175);
+        box-shadow: 1px 6px 12px rgba(0, 0, 0, 0.175);
+        h3 {
+          text-align: left;
+          padding-left: 10px;
+        }
+        .buttonGroup {
+          display: flex;
+          justify-content: flex-start;
+          flex-wrap: wrap;
+          button {
+            width: 100px;
+            height: 35px;
+            margin: 10px;
+            line-height: 35px;
+            padding: 0 10px;
+            span {
+              display: block;
+              padding: 0;
+              margin: 0;
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
   .articlList {
     list-style: none;
     .articlList-item {
       position: relative;
       height: auto;
-      padding: 15px 10px;
+      padding: 20px 30px 30px 30px;
       overflow: hidden;
       border-bottom: 1px solid #ddd;
       .articl-avatar-item {
@@ -205,7 +339,6 @@ export default {
         a {
           display: flex;
           display: -webkit-flex;
-          color: #333;
           img {
             width: 40px;
             height: 40px;
@@ -218,7 +351,7 @@ export default {
             height: 40px;
             .time {
               font-size: 12px;
-              color: #ddd;
+              color: #999;
             }
           }
         }
@@ -226,23 +359,27 @@ export default {
       .aritcl-info-item {
         display: -webkit-flex;
         display: flex;
+        min-height: 100px;
+        a {
+          color: #999;
+        }
         .articl-img-item {
           width: 230px;
           height: 140px;
           img {
-            object-fit: cover;
-            width: 100%;
-            height: 100%;
+            width: 230px;
+            height: 140px;
           }
         }
         .articl-text-item {
           margin-left: 20px;
           position: relative;
           .title:hover {
-            text-decoration: underline;
+            text-decoration: none;
           }
           h3 {
             font-size: 18px;
+            color: #212529;
           }
           .tag-group {
             position: absolute;
