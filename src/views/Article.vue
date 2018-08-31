@@ -44,7 +44,7 @@
                     
                 </ul>
             </div>
-            <Page v-if="comment.pageSize < comment.total" :total="comment.total" show-elevator class="pagecont" @on-change="changePage"/>
+            <Page v-if="comment.pageSize < comment.total" :page-size="comment.pageSize" :total="comment.total" show-elevator class="pagecont" @on-change="changePage"/>
             <BackTop></BackTop>
         </Content>
       </Col>

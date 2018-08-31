@@ -81,6 +81,9 @@
         </Content>
         </Col>
         <Col :xs="0" :sm="6" :md="6" :lg="3" >
+            <div :style="{margin: '88px 0 0 0', minHeight: '500px', 'z-index': '1'}">
+                <img src="../../static/bihu-e.452c8664.jpg" alt="二维码" style="width: 100%;">
+            </div>
         </Col>
     </Row>     
     <Foot/>
