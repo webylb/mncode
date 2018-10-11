@@ -1,6 +1,6 @@
 # mncode
 ```
-this is start up
+this is start up  copy Bihu
 ```
 
 ## Project setup
